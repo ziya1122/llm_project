@@ -1,28 +1,216 @@
+# 🩻 MedVision AI – Multimodal Medical Assistant
 
-## Objective
-The purpose of this chatbot is to help doctors in examining the chest x-ray images and help them in diagnosis.
+## 📌 Project Overview
 
-[//]: # (## Sign up on Qdrant)
+MedVision AI is a **multimodal AI system** that analyzes medical images along with user queries to generate structured diagnostic insights.
 
-[//]: # (- Go to https://qdrant.tech/ and click on "Start Free" button on top right.)
+It combines:
 
-[//]: # (- You may sign up with your Google account or Github account.)
+* Computer Vision (image understanding)
+* Vector Database (semantic search)
+* Large Language Models (text generation)
 
-[//]: # (- I'm going ahead with my google account.)
+---
 
-[//]: # (- Create your first cluster. ![img.png]&#40;docs_files/img.png&#41;)
+## 🚀 Features
 
-[//]: # (- Give it your name and click on 'Create Free Cluster'.)
+* 📷 Upload medical images (X-rays, scans)
+* 📝 Enter symptoms or medical queries
+* 🧠 AI-generated:
 
-[//]: # (- Save your api cluster in your .env file.)
+  * Diagnosis
+  * Findings
+  * Recommendations
+* 🔍 Retrieves similar medical cases using vector search
+* ⚡ Real-time interface using Gradio
 
-[//]: # (- It'll take some time to get your cluster ready. So, have some patience, good things take time! )
+---
 
-[//]: # (- After completing all the steps, your dashboard would look something like this - ![img_1.png]&#40;docs_files/img_1.png&#41;)
+## 🧠 How It Works
 
-## Dataset - 
-The MIMIC Chest X-ray (MIMIC-CXR) - https://physionet.org/content/mimic-cxr/2.1.0/
+### 🔄 Pipeline
 
-## Output
-![img_2.png](docs_files/img_2.png)
-![img_3.png](docs_files/img_3.png)"# llm-mini-project" 
+1. **Image Input**
+
+   * User uploads a medical image
+
+2. **Image Captioning**
+
+   * Image → text description
+   * Model: BLIP
+
+3. **Embedding Generation**
+
+   * Converts text & images → vectors
+   * Library: FastEmbed
+
+4. **Vector Search (RAG)**
+
+   * Uses Qdrant to retrieve similar cases
+
+5. **LLM Processing**
+
+   * Combines:
+
+     * user query
+     * image caption
+     * retrieved context
+   * Generates diagnosis
+
+---
+
+## 🏗️ Tech Stack
+
+* **Frontend**: Gradio
+* **Backend**: Python
+* **Image Captioning**: BLIP
+* **Embeddings**: FastEmbed
+* **Vector DB**: Qdrant
+* **LLM**: LLaMA (Groq API)
+
+---
+
+## 📂 Project Structure
+
+```
+healthcare_multimodal_ai/
+│
+├── data/                  # Dataset (images + captions)
+├── src/
+│   ├── main.py           # Gradio UI
+│   ├── multimodal_rag_system.py
+│   ├── create_data_embeddings.py
+│   ├── embeddings_utils.py
+│   ├── gpt_utils.py
+│   └── image_captioning.py
+│
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+### 1️⃣ Clone Repo
+
+```
+git clone https://github.com/ziya1122/llm_project.git
+cd llm_project
+```
+
+---
+
+### 2️⃣ Create Virtual Environment
+
+```
+python -m venv venv
+venv\Scripts\activate
+```
+
+---
+
+### 3️⃣ Install Dependencies
+
+```
+pip install -r requirements.txt
+```
+
+---
+
+## 🔑 API Setup
+
+Create a `.env` file:
+
+```
+GROQ_API_KEY=your_api_key_here
+```
+
+---
+
+## ▶️ Run Project
+
+```
+cd src
+python main.py
+```
+
+Open in browser:
+
+```
+http://127.0.0.1:7860
+```
+
+---
+
+## ⚠️ Known Issue (IMPORTANT)
+
+You may encounter this error:
+
+```
+FileNotFoundError: No such file or directory
+```
+
+### ✅ Fix
+
+Ensure directory exists before saving image:
+
+```python
+os.makedirs(base_dir, exist_ok=True)
+```
+
+Also avoid hardcoded paths like:
+
+```
+/Users/sarthak/...
+```
+
+Use dynamic path:
+
+```python
+os.path.join(os.path.dirname(__file__), "..", "data")
+```
+
+---
+
+## 📊 Sample Output
+
+```
+Diagnosis:
+Possible fracture of forearm.
+
+Findings:
+Bone misalignment observed.
+
+Recommendation:
+Further imaging (CT scan) suggested.
+```
+
+---
+
+## ⚠️ Limitations
+
+* Model does not directly see images (uses captions)
+* Accuracy depends on dataset quality
+* Not a replacement for professional diagnosis
+
+---
+
+## 🔮 Future Improvements
+
+* Use vision-language models (true multimodal LLM)
+* Improve dataset quality
+* Add confidence score
+* Deploy online (cloud)
+
+---
+
+## 👩‍💻 Author
+
+* Ziya Dias
+
+---
+
+## 📜 License
+
+This project is for educational purposes only.
