@@ -1,0 +1,6 @@
+fastembed==0.8.0
+pandas==2.3.3
+python-dotenv>=1.0.1
+requests>=2.32.3
+gradio>=4.44.0
+pillow>=10.4.0
